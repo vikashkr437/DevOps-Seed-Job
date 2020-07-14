@@ -26,8 +26,10 @@ job('T6JOB2') {
       if  kubectl get deployment  myweb
       then
       sudo echo "Already Running Requirement satisfied"
+      kubectl cp /ws/*.html $(kubectl get pods  -o custom-columns=:metadata.name ):/var/www/html
       else  
       kubectl create -f /root/dockjen/htmldep.yml
+      kubectl cp /ws/*.html $(kubectl get pods  -o custom-columns=:metadata.name ):/var/www/html
       fi
       else
       sudo echo "Sorry Requirement cannot be satisfied"
