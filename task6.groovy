@@ -26,10 +26,8 @@ job('T6JOB2') {
       if  kubectl get deployment  myweb
       then
       sudo echo "Already Running Requirement satisfied"
-      kubectl cp /ws/*.html $(kubectl get pods  -o custom-columns=:metadata.name ):/var/www/html
       else  
       kubectl create -f /root/dockjen/htmldep.yml
-      kubectl cp /ws/*.html $(kubectl get pods  -o custom-columns=:metadata.name ):/var/www/html
       fi
       else
       sudo echo "Sorry Requirement cannot be satisfied"
@@ -48,6 +46,7 @@ job('T6JOB3') {
     steps {
         remoteShell('root@192.168.99.104:22') {
             command('''
+            kubectl cp /root/wst3/*.html $(kubectl get pods  -o custom-columns=:metadata.name ):/var/www/html
             stat=$(curl -o /dev/null -s -w "%{http_code}" http://192.168.99.103:30001)
             if [[ $stat==200 ]]
             then 
